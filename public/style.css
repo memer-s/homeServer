@@ -1,0 +1,88 @@
+.kort1 {
+    background-image: url(/files/Shaggy_zoinks_face.jpg); 
+}
+
+.kort {
+    width: 90%;
+    height: 20em; 
+    margin: 5% 5% 0 5%; 
+    background-size: cover; 
+    background-position: center;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.03);
+}
+
+.cardi {
+    min-width: 420px;
+    margin-top: 2em;
+}
+
+.loginbtn {
+    margin-left: 15px;
+}
+
+.loginsec {
+    width: 30%;
+    margin-top: 5em;
+}
+
+.kortlekar {
+    padding: 0 40px;
+}
+
+footer {
+    margin-top: 100px;
+    background-color: rgba(0,0,0,.03);
+    padding: 10px;
+    text-align: center;
+    
+}
+
+footer p {
+    color: rgba(0,0,0,.4);
+    margin: 1em;
+}
+
+.downies {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+/*stolen from w3schools*/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .kortlekar {
+        padding: 0 15px;
+    }
+
+    .registerbtn {
+        display: none;
+    }
+
+    .loginsec {
+        width: initial;
+    }
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    
+}

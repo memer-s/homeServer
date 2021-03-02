@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+    head
+        title Index 
+        include includes/head.pug
+
+    body
+        include includes/navbar.pug
+        //code here
+
+        .jumbotron
+            h1.display-3 Välkommen till min brunn.
+            p.lead Mimers brunn då.
+            hr.my-2
+            p här kommer lite mer information
+            p.lead
+                a.btn.btn-primary.btn-lg(href='downloads' role='button') Nedladdningar
+
+        //scripts
+        include includes/scripts.pug

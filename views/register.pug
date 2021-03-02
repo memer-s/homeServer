@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+    head
+        title Index 
+        include includes/head.pug
+
+    body
+        include includes/navbar.pug
+        //code here
+
+        .container-fluid.loginsec
+            h1
+                | Register to Memer Co.
+            form(action='' method='POST')
+                .form-group
+                    label(for='username') Username: 
+                    input#username.form-control(type='text' name='username' aria-describedby='helpId' placeholder='')
+                    small#helpId1.form-text.text-muted Your username goes here!
+                .form-group
+                    label(for='password') Password: 
+                    input#password.form-control(type='password' name='password' aria-describedby='helpId' placeholder='')
+                    small#helpId2.form-text.text-muted Your password goes here!
+                .form-group
+                    label(for='email') Email:
+                    input.form-control(type='email' name='email' aria-describedby='emailHelpId' placeholder='')
+                    small#emailHelpId.form-text.text-muted Help text
+                .form-group 
+                    label(for='firstname') First Name:
+                    input.form-control(type='text' name='firstname' aria-describedby='helpId' placeholder='')
+                    small#helpId.form-text.text-muted Help text
+
+                button.btn.btn-success(type='submit') Submit
+
+        //scripts
+        include includes/scripts.pug
