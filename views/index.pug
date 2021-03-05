@@ -7,14 +7,16 @@ html(lang="en")
     body
         include includes/navbar.pug
         //code here
+        if username 
 
-        .jumbotron
-            h1.display-3 Välkommen till min brunn.
-            p.lead Mimers brunn då.
-            hr.my-2
-            p här kommer lite mer information
-            p.lead
-                a.btn.btn-primary.btn-lg(href='downloads' role='button') Nedladdningar
 
+        else 
+            .jumbotron
+                h1.display-3 Välkommen till min brunn.
+                p.lead Mimers brunn då.
+                hr.my-2
+                p här kommer lite mer information
+                p.lead
+                    a.btn.btn-primary.btn-lg(href='downloads' role='button') Nedladdningar
         //scripts
         include includes/scripts.pug

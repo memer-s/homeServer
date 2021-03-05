@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        title Upload Files 
+        include includes/head.pug
+
+    body
+        include includes/navbar.pug
+        //code here
+
+        .container-fluid.loginsec(style='width:40%;')
+            form(ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data")
+                .form-group
+                    label(for='') File
+                    input.form-control-file(type='file' name='preview' id='' placeholder='' aria-describedby='fileHelpId')
+                .form-group
+                    label(for='') Preview Image
+                    input.form-control-file(type='file' name='' id='' placeholder='' aria-describedby='fileHelpId')
+                .form-group
+                    label(for='') Title
+                    input.form-control(type='text' name='title' id='' aria-describedby='helpId' placeholder='')
+                .form-group
+                    label(for='') Description
+                    textarea.form-control(name='text' id='' rows='3')
+                .form-group
+                    label(for='') Date
+                    input.form-control(type='text' name='date' id='' aria-describedby='helpId' placeholder='')
+                    small#helpId.form-text.text-muted Day Month(3 characters) Year
+                button.btn.btn-primary(type='submit') Submit
+
+        //scripts
+        include includes/scripts.pug

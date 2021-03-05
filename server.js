@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const pug = require('pug');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('dwndb.db');
@@ -10,6 +11,7 @@ const port = 5000
 
 const app = express()
 
+const pics = 2;
 
 app.use(express.urlencoded({ extended: false }))
 
@@ -27,18 +29,20 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(__dirname + '/public'))
+app.use(fileUpload())
 
 app.get('/', (req, res) => {
-    res.render('index.pug')
     console.log('someone is on index')
 
     try {
         if(sess.uid != null) {
             console.log('logged in and id is '+sess.uid+' and username is '+sess.username+' session id: '+sess.sessid)
         }
+        res.render('index.pug', {username: sess.username,})
     }
     catch {
         console.log('no session found')
+        res.render('index.pug')
     }
 
 });
@@ -49,30 +53,37 @@ app.get('/', (req, res) => {
 //------------------------------------------------------------
 
 app.get('/downloads', (req, res) => {
-    db.get('SELECT * FROM downloadTbl;', [req.body.username, req.body.password], (err, row) => {
+    
+    db.all('SELECT * FROM downloadTbl;', [], (err, rows ) => {
         if(err) {
             throw err
         }
 
-        if(row != null) {
+        if(rows != null) {
+            const rowcount = rows.length;
+
             res.render('downloads.pug', {
-                n:row.pid, 
+                rows,
+                rowcount,
+                pics, 
                 preview:'Shaggy_zoinks_face.jpg',
             })
+            console.log(rows);
         }
-
-        else {
-            res.send('not logged in')
-        }
-
     })
+    db.close()
 
     console.log('someone is on downloads')
 });
 
 app.get('/login', (req, res) => {
     res.render('login.pug')
-    console.log('someone is on login')
+    try {
+        console.log(sess.username+' is on login')
+    }
+    catch {
+        console.log('someone is on login')
+    }
 })
 
 app.post('/login', (req, res) => {
@@ -86,13 +97,13 @@ app.post('/login', (req, res) => {
         }
 
         if(row != null) {
-            res.send('logged in')
+            res.send('index.pug')
             //console.log(row.uid);
             sess = req.session;
             sess.sessid = req.sessionID;
             sess.uid = row.uid;
             sess.username = row.username;
-            console.log('logged in and id is '+sess.uid+' and username is '+sess.username+'session id: '+sess.sessid)
+            console.log('logged in and id is '+sess.uid+' and username is '+sess.username+' session id: '+sess.sessid);
         }
 
         else {
@@ -100,7 +111,6 @@ app.post('/login', (req, res) => {
         }
 
     })
-
 
 })
 
@@ -118,7 +128,7 @@ app.post('/register', (req, res) => {
 
         stmt.finalize()
     })
-    db.close()
+    
     console.log(req.body.username)
     console.log(req.body.password)
     console.log(req.body.email)
@@ -137,6 +147,62 @@ app.get('/files/:file(*)', (req, res) => { //                                   
         
     })
 })
+
+app.get('/upload', (req, res) => {
+    res.render('upload.pug')
+    console.log('someone is on register')
+})
+
+app.post('/upload', (req, res) => {
+    
+    let preview;
+    let file;
+    let previewPath;
+    let filePath;
+
+    
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+    
+
+    preview = req.files.preview;
+    previewPath = __dirname + '/public/images/' + preview.name;
+  
+    // Use the mv() method to place the file somewhere on your server
+    preview.mv(previewPath, function(err) {
+        if (err)
+            console.log(err)
+    
+        console.log('file 1 uploaded')
+    });
+
+    file = req.files.preview;
+    filePath = __dirname + '/files/' + file.name;
+  
+    // Use the mv() method to place the file somewhere on your server
+    file.mv(filePath, function(err) {
+        if (err)
+            console.log(err)
+    
+        console.log('file 1 uploaded')
+    });
+
+    db.serialize( () => {
+        //structure downloadTbl(pid, title, text, date, preview, file)
+        const stmt = db.prepare('INSERT INTO downloadTbl(title, text, date, preview, file) VALUES(?, ?, ?, ?, ?);')
+    
+        stmt.run(req.body.title, req.body.text, req.body.date, preview.name, file.name)
+
+        stmt.finalize()
+    })
+    console.log(req.body.title)
+    console.log(req.body.text)
+    console.log(req.body.date)
+    res.redirect('/downloads')
+})
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

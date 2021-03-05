@@ -12,47 +12,53 @@ html(lang="en")
             .downies 
                 h1 Downloads Tier 1.
             br
-            .card-deck(style='height: 200%;')
-                - var i = 0;
-                while i < n
-                    .card.cardi
-                        .card-img-top.kort(style='background-image: url("/images/'+preview+'")')
-                        .card-body
-                            h4.card-title='Title '+i
-                            p.card-text='Title '+i
-                            button.btn.btn-secondary.btn-lg(type='button' data-toggle='modal' data-target='#') Download
-                    - i++
-            .downies
+            .downloaders
+                .card-deck.kort2
+                    - var i = 0;
+                    while i < rowcount
+                        .card.cardi
+                            .card-img-top.kort(style='background-image: url("/images/'+rows[i].preview+'")')
+                            .card-body.bodil
+                                h4.card-title= rows[i].title
+                                p.card-text= rows[i].text
+                                button.btn.btn-primary.btn-lg(type='button' data-toggle='modal' data-target='#modelId' onclick="document.getElementById('downbutton').href = '/files/"+rows[i].file+"'" style="margin-top: auto; align-self: flex-end;") Download
+                            .card-footer
+                                small.text-muted= 'Last updated '+rows[i].date+'.'
+                        - i++
+            //.downies
                 h1 Downloads Tier 2.
-            .card-deck
-                .card
+            //.card-deck
+                .card.cardi
                     .card-img-top.kort
                     .card-body
                         h4.card-title Title
                         p.card-text Text
                         button.btn.btn-secondary.btn-lg(type='button' data-toggle='modal' data-target='#') Download
-                .card
+                .card.cardi
                     .card-img-top.kort(style='background-image: url("/images/Shaggy_zoinks_face.jpg")')
                     .card-body
                         h4.card-title Title
                         p.card-text Text
                         button.btn.btn-secondary.btn-lg(type='button' data-toggle='modal' data-target='#') Download
-                .card
+                .card.cardi
                     .card-img-top.kort
                     .card-body
                         h4.card-title Title
                         p.card-text Text
                         button.btn.btn-secondary.btn-lg(type='button' data-toggle='modal' data-target='#') Download
-                .card
+                .card.cardi
                     .card-img-top.kort.kort1
                     .card-body
-                        h4.card-title Shaggy download
+                        h4.card-title= rows[0].title
                         p.card-text
                             | Download my profile picture that i use on all my social platforms because why not i guess. (used for testing)
                         button.btn.btn-primary.btn-lg(type='button' data-toggle='modal' data-target='#modelId') Download
                     .card-footer
                         small.text-muted Last updated 16 Feb 2021.
-        include includes/footer.pug
+
+        include includes/modal.pug 
+
+        
 
 
         //scripts

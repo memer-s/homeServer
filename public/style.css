@@ -10,11 +10,18 @@
     background-position: center;
     border-radius: 4px;
     background-color: rgba(0,0,0,.03);
+    min-width: 420;
 }
 
 .cardi {
-    min-width: 420px;
     margin-top: 2em;
+    flex: 1 0 22% !important;
+    max-width: 22vw;
+}
+
+.bodil {
+    display: flex;
+    flex-direction: column;
 }
 
 .loginbtn {
@@ -30,12 +37,19 @@
     padding: 0 40px;
 }
 
+.downloaders {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+}
+
 footer {
     margin-top: 100px;
     background-color: rgba(0,0,0,.03);
     padding: 10px;
     text-align: center;
-    
+    bottom: 0;
 }
 
 footer p {
